@@ -1,80 +1,130 @@
 import React from "react";
-import "./Clients.css"
+import styled, { keyframes, css } from "styled-components";
 
 function Clients() {
-  const root = document.documentElement;
-  const marqueeElementsDisplayed = getComputedStyle(root).getPropertyValue(
-    "--marquee-elements-displayed"
-  );
-  const marqueeContent = document.querySelector("ul.marquee-content");
-  const marqueeContent1 = document.querySelector("ul.marquee-content1");
+  const row1 = [
+    "/images/akfaMedline.svg",
+    "/images/cspase.svg",
+    "/images/delever.svg",
+    "/images/fonon.svg",
+    "/images/hamkorbank.svg",
+    "/images/hoshimov.svg",
+    "/images/iman.svg",
+  ];
 
-  root.style.setProperty("--marquee-elements", marqueeContent?.children.length);
-  root.style.setProperty("--marquee-elements1", marqueeContent1?.children.length);
-
-  for (let i = 0; i < marqueeElementsDisplayed; i++) {
-    marqueeContent?.appendChild(marqueeContent.children[i].cloneNode(true));
-  }
-  for (let i = 0; i < marqueeElementsDisplayed; i++) {
-    marqueeContent1?.appendChild(marqueeContent1.children[i].cloneNode(true));
-  }
+  const row2 = [
+    "/images/maxtra.svg",
+    "/images/smsuz.svg",
+    "/images/goodzone.svg",
+    "/images/rabota.svg",
+    "/images/workly.svg",
+    "/images/mytaxi.svg",
+    "/images/shefburger.svg",
+  ];
   return (
-    <div id="clients" className="py-28">
+    <div id="clients" className="pt-28">
       <div className="max-w-[1140px] mx-auto">
         <h1 className="custom-title mb-20">Our services</h1>
       </div>
-      <div className="marquee mb-5">
-        <ul className="marquee-content flex items-center gap-12">
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/akfaMedline.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/cspase.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/delever.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/fonon.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/hamkorbank.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/hoshimov.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/iman.svg" alt="" />
-          </li>          
-        </ul>
-      </div>
-      <div className="marquee1">
-        <ul className="marquee-content1 flex items-center gap-12">
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/maxtra.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/smsuz.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/goodzone.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/rabota.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/workly.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/mytaxi.svg" alt="" />
-          </li>
-          <li className="w-5 h-5 bg-blue-300">
-            <img src="/images/shefburger.svg" alt="" />
-          </li>          
-        </ul>
-      </div>
+      <Wrapper>
+        <Marquee>
+          <MarqueeGroup>
+            {row1.map((el) => (
+              <ImageGroup>
+                <Image src={el} className="hover:scale-110" />
+              </ImageGroup>
+            ))}
+          </MarqueeGroup>
+          <MarqueeGroup>
+            {row1.map((el) => (
+              <ImageGroup>
+                <Image src={el} className="hover:scale-110" />
+              </ImageGroup>
+            ))}
+          </MarqueeGroup>
+        </Marquee>
+        <Marquee>
+          <MarqueeGroup2>
+            {row2.map((el) => (
+              <ImageGroup>
+                <Image src={el} className="hover:scale-110" />
+              </ImageGroup>
+            ))}
+          </MarqueeGroup2>
+          <MarqueeGroup2>
+            {row2.map((el) => (
+              <ImageGroup>
+                <Image src={el} className="hover:scale-110" />
+              </ImageGroup>
+            ))}
+          </MarqueeGroup2>
+        </Marquee>
+      </Wrapper>
     </div>
   );
 }
 
 export default Clients;
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: fit-content;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const Marquee = styled.div`
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  margin-bottom: 30px;
+`;
+
+const scrollX = keyframes`
+  from {
+    left: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+`;
+
+const common = css`
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  white-space: nowrap;
+  width: 100%;
+  animation: ${scrollX} 100s linear infinite;
+`;
+
+const MarqueeGroup = styled.div`
+  ${common}
+`;
+const MarqueeGroup2 = styled.div`
+  ${common}
+  animation-direction: reverse;
+  animation-delay: -3s;
+`;
+
+const ImageGroup = styled.div`
+  display: grid;
+  place-items: center;
+  width: clamp(10rem, 1rem + 40vmin, 30rem);
+  padding: calc(clamp(10rem, 1rem + 30vmin, 30rem) / 20);
+  `;
+  
+  const Image = styled.img`
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  /* border: 1px solid black; */
+  border-radius: 24px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease-in-out;
+`;
